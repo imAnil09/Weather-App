@@ -87,7 +87,7 @@ function App() {
       <div className='footerBackground' style={{ display: 'flex', justifyContent: "space-evenly", height: "80%", width: "auto", borderTopRightRadius:"25px", borderTopLeftRadius:"25px" }}>
         <div style={{ display: 'flex', justifyContent: "center", alignItems: "center", flexDirection: "column", padding: "1rem" }}>
           <img src={humidity} style={{ height: "5rem", }} alt='Humidity' />
-          <Typography className='alertName' sx={{ fontSize: "1.8rem", fontWeight: "550", color: "white" }}>{data.humidity}</Typography>
+          <Typography className='alertName' sx={{ fontSize: "1.8rem", fontWeight: "550", color: "white" }}>{data.humidity}%</Typography>
         </div>
         <div style={{ display: 'flex', justifyContent: "center", alignItems: "center", flexDirection: "column", padding: "1rem" }}>
           <img src={clouds} style={{ height: "5rem", }} alt='sun' />
@@ -95,7 +95,7 @@ function App() {
         </div>
         <div style={{ display: 'flex', justifyContent: "center", alignItems: "center", flexDirection: "column", padding: "1rem" }}>
           <img src={wind} style={{ height: "5rem", }} alt='Wind Speed' />
-          <Typography className='alertName' sx={{ fontSize: "1.8rem", fontWeight: "550", color: "white" }}>{data.windSpeed}</Typography>
+          <Typography className='alertName' sx={{ fontSize: "1.8rem", fontWeight: "550", color: "white" }}>{data.windSpeed}/km</Typography>
         </div>
 
       </div>
