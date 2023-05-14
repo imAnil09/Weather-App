@@ -80,7 +80,7 @@ function App() {
         ref={inputRef}
         onKeyDown={(e)=>{
           if(e.keyCode === 13){
-            return setCityName(value);
+            return setCityName(value); 
           }
         }} 
         onChange={(e) => setValue(e.target.value)} 
