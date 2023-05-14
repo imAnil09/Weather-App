@@ -74,7 +74,7 @@ function App() {
   return (
     <div style={{ backgroundColor: "#0093E9", backgroundImage: "linear-gradient(160deg, #1f4037 0%, #99f2c8 100%)", height: "100%", paddingBottom: "2rem", width: "100%" }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: "1rem 1.5rem", backgroundImage: "linear-gradient(160deg, #C9D6FF 0%, #E2E2E2 100%)", borderBottom: "1px solid white" }}>
-        <img src={logo} style={{width:"3.5rem", height:"3.5rem"}} alt="logo" />
+        <img src={logo} style={{width:"3rem", height:"3rem"}} alt="logo" />
         <TextField placeholder='Hyderabad'
         size='small'
         ref={inputRef}
