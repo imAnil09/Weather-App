@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import { Button, Grid, InputAdornment, TextField, Typography } from '@mui/material';
 import { BiChevronDown } from 'react-icons/bi';
@@ -10,13 +10,29 @@ import ToggleSwitch from './components/ToggleSwitch';
 import cloud from './Images/weather-app1.png';
 import humidity from './Images/drop.png';
 import clouds from './Images/weather-cloud.png';
+import logo from './Images/logo.png';
 import wind from './Images/wind.png';
 import axios from 'axios';
+// import { classes } from './Styles';
+import { makeStyles } from '@mui/styles';
 
 function App() {
 
+  const style = makeStyles({
+    footerTitle: {
+      fontSize: "1.5rem !important", fontWeight:"450", color: "white"
+    },
+    footerValue: {
+      fontSize: "1.5rem !important", color: "white"
+    }
+  });
+
+  const classes = style();
+
+
   const [value, setValue] = useState();
   const [cityName, setCityName] = useState();
+  const inputRef = useRef();
 
   const [data, setData] = useState({
     name: 'Hyderabad',
@@ -31,29 +47,37 @@ function App() {
   const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName || 'Hyderabad'}&appid=baca9c932141ffc411892ac2ec4c522d&units=metric`;
   useEffect(() => {
 
-    axios.get(apiURL).then(res => {
-      setData({
-        ...data,
-        name: res.data.name,
-        temperature: res.data.main.temp,
-        description: res.data.weather[0].description,
-        windSpeed: res.data.wind.speed,
-        humidity: res.data.main.humidity,
-        clouds: res.data.clouds.all,
-      }),
-      console.log(res.data)
-    }).catch(error => {
-      console.log(error, 'from Axios');
-    })
-  }, [apiURL])
+    // const timer = setTimeout(()=> {
+    //   if(value === inputRef.current.value)
+      axios.get(apiURL).then(res => {
+        setData({
+          ...data,
+          name: res.data.name,
+          temperature: res.data.main.temp,
+          description: res.data.weather[0].description,
+          windSpeed: res.data.wind.speed,
+          humidity: res.data.main.humidity,
+          clouds: res.data.clouds.all,
+        }),
+        console.log(res.data)
+      }).catch(error => {
+        console.log(error, 'from Axios');
+      })
+    // }, 500)
+
+    // return ()=>{
+    //   clearTimeout(timer);
+    // }
+
+  }, [apiURL, inputRef])
 
   return (
     <div style={{ backgroundColor: "#0093E9", backgroundImage: "linear-gradient(160deg, #1f4037 0%, #99f2c8 100%)", height: "100%", paddingBottom: "2rem", width: "100%" }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: "1rem 1.5rem", backgroundImage: "linear-gradient(160deg, #C9D6FF 0%, #E2E2E2 100%)", borderBottom: "1px solid white" }}>
-        <Button style={{ fontWeight: "550", fontSize: "2rem" }}><BiMenuAltLeft /></Button>
-        {/* <Typography sx={{fontWeight:"550", fontSize:"1.2rem"}}>Weather App</Typography> */}
+        <img src={logo} style={{width:"3.5rem", height:"3.5rem"}} alt="logo" />
         <TextField placeholder='Hyderabad'
         size='small'
+        ref={inputRef}
         onKeyDown={(e)=>{
           if(e.keyCode === 13){
             return setCityName(value);
@@ -84,23 +108,23 @@ function App() {
         </Grid>
       </Grid>
 
-      <div className='footerBackground' style={{ display: 'flex', justifyContent: "space-evenly", height: "80%", width: "auto", borderTopRightRadius:"25px", borderTopLeftRadius:"25px" }}>
+      <div className='footerBackground' style={{ display: 'flex', justifyContent: "space-evenly", height: "75%", width: "auto", borderTopRightRadius:"25px", borderTopLeftRadius:"25px" }}>
         <div style={{ display: 'flex', justifyContent: "center", alignItems: "center", flexDirection: "column", padding: "1rem" }}>
-          <img src={humidity} style={{ height: "5rem", }} alt='Humidity' />
-          <Typography className='alertName' sx={{ fontSize: "1.8rem", fontWeight: "550", color: "white" }}>{data.humidity}%</Typography>
+          <img src={humidity} style={{ height: "4rem", }} alt='Humidity' />
+          <Typography className={classes.footerTitle}>Humidity</Typography>
+          <Typography className={classes.footerValue}>{data.humidity}%</Typography>
         </div>
         <div style={{ display: 'flex', justifyContent: "center", alignItems: "center", flexDirection: "column", padding: "1rem" }}>
-          <img src={clouds} style={{ height: "5rem", }} alt='sun' />
-          <Typography className='alertName' sx={{ fontSize: "1.8rem", fontWeight: "550", color: "white" }}>{data.clouds}</Typography>
+          <img src={clouds} style={{ height: "4rem", }} alt='sun' />
+          <Typography className={classes.footerTitle}>Clouds</Typography>
+          <Typography className={classes.footerValue}>{data.clouds}</Typography>
         </div>
         <div style={{ display: 'flex', justifyContent: "center", alignItems: "center", flexDirection: "column", padding: "1rem" }}>
-          <img src={wind} style={{ height: "5rem", }} alt='Wind Speed' />
-          <Typography className='alertName' sx={{ fontSize: "1.8rem", fontWeight: "550", color: "white" }}>{data.windSpeed}/km</Typography>
+          <img src={wind} style={{ height: "4rem", }} alt='Wind Speed' />
+          <Typography className={classes.footerTitle}>Speed</Typography>
+          <Typography className={classes.footerValue}>{data.windSpeed}/km</Typography>
         </div>
-
       </div>
-
-
     </div>
   )
 }
